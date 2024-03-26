@@ -1,7 +1,7 @@
 import unittest
 import os
 from unittest import IsolatedAsyncioTestCase
-from utils.call_apim import call_apim_with_httpx
+from utils.call_apim import post_apim_with_httpx
 
 AZURE_APIM_ENDPOINT = os.getenv("AZURE_APIM_ENDPOINT") + 'chat'
 APIM_SUB_KEY = os.getenv("APIM_SUB_KEY")
@@ -17,7 +17,7 @@ class TestDocSearchAPIAysnc(IsolatedAsyncioTestCase):
 
     async def test_docsearch_api_async_success(self):
         # Call the function with the test parameters
-        response = await call_apim_with_httpx(AZURE_APIM_ENDPOINT, body, APIM_SUB_KEY)
+        response = await post_apim_with_httpx(AZURE_APIM_ENDPOINT, body, APIM_SUB_KEY)
 
         # Assert that the response is as expected
         self.assertEqual(response.status_code, 200)
@@ -28,13 +28,13 @@ class TestDocSearchAPIAysnc(IsolatedAsyncioTestCase):
 
         # Call the function with the test parameters and check if an exception is raised
         with self.assertRaises(Exception):
-            await call_apim_with_httpx(incorrect_endpoint, body, APIM_SUB_KEY)        
+            await post_apim_with_httpx(incorrect_endpoint, body, APIM_SUB_KEY)        
     
     async def test_docsearch_api_fail_invalid_key(self):
         # Use an incorrect subscription key
         incorrect_key = "incorrect_key"
         
-        response = await call_apim_with_httpx(AZURE_APIM_ENDPOINT, body, incorrect_key)
+        response = await post_apim_with_httpx(AZURE_APIM_ENDPOINT, body, incorrect_key)
         self.assertEqual(response.status_code, 401)
 
     async def test_docsearch_api_fail_invalid_body(self):
@@ -43,7 +43,7 @@ class TestDocSearchAPIAysnc(IsolatedAsyncioTestCase):
             "incorrect": "body"
         }
 
-        response = await call_apim_with_httpx(AZURE_APIM_ENDPOINT, incorrect_body, APIM_SUB_KEY)
+        response = await post_apim_with_httpx(AZURE_APIM_ENDPOINT, incorrect_body, APIM_SUB_KEY)
         self.assertEqual(response.status_code, 500)
 
 if __name__ == '__main__':
