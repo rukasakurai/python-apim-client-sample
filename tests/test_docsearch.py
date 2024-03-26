@@ -1,9 +1,8 @@
-import json
 import unittest
-from utils.docsearch import docsearch_api
+from utils.docsearch import call_apim
 import os
 
-AZURE_APIM_ENDPOINT = os.getenv("AZURE_APIM_ENDPOINT")
+AZURE_APIM_ENDPOINT = os.getenv("AZURE_APIM_ENDPOINT") + 'chat'
 APIM_SUB_KEY = os.getenv("APIM_SUB_KEY")
 
 class TestDocSearchAPI(unittest.TestCase):
@@ -18,11 +17,11 @@ class TestDocSearchAPI(unittest.TestCase):
         }
 
         # Call the function with the test parameters
-        response = docsearch_api(AZURE_APIM_ENDPOINT, body, APIM_SUB_KEY)
+        response = call_apim(AZURE_APIM_ENDPOINT, body, APIM_SUB_KEY)
 
         # Assert that the response is as expected
         self.assertEqual(response.status_code, 200)
-
+        
     def test_docsearch_api_fail_invalid_endpoint(self):
         # Define the input parameters for the test
         body = {
@@ -37,7 +36,7 @@ class TestDocSearchAPI(unittest.TestCase):
 
         # Call the function with the test parameters and check if an exception is raised
         with self.assertRaises(Exception):
-            docsearch_api(incorrect_endpoint, body, APIM_SUB_KEY)
+            call_apim(incorrect_endpoint, body, APIM_SUB_KEY)        
     
     def test_docsearch_api_fail_invalid_key(self):
         # Define the input parameters for the test
@@ -50,10 +49,9 @@ class TestDocSearchAPI(unittest.TestCase):
 
         # Use an incorrect subscription key
         incorrect_key = "incorrect_key"
-
-        # Call the function with the test parameters and check if an exception is raised
-        with self.assertRaises(Exception):
-            docsearch_api(AZURE_APIM_ENDPOINT, body, incorrect_key)
+        
+        response = call_apim(AZURE_APIM_ENDPOINT, body, incorrect_key)
+        self.assertEqual(response.status_code, 401)
 
     def test_docsearch_api_fail_invalid_body(self):
         # Define an incorrect body
@@ -61,9 +59,8 @@ class TestDocSearchAPI(unittest.TestCase):
             "incorrect": "body"
         }
 
-        # Call the function with the test parameters and check if an exception is raised
-        with self.assertRaises(Exception):
-            docsearch_api(AZURE_APIM_ENDPOINT, incorrect_body, APIM_SUB_KEY)
-
+        response = call_apim(AZURE_APIM_ENDPOINT, incorrect_body, APIM_SUB_KEY)
+        self.assertEqual(response.status_code, 500)
+        
 if __name__ == '__main__':
     unittest.main()
