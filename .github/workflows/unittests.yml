@@ -8,6 +8,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      VAR1: ${{ secrets.AZURE_APIM_ENDPOINT }}
+      VAR2: ${{ secrets.APIM_SUB_KEY }}
 
     steps:
     - name: Checkout code
