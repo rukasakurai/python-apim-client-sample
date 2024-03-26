@@ -9,8 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-z    env:
+    env:
       VAR1: ${{ secrets.AZURE_APIM_ENDPOINT }}
       VAR2: ${{ secrets.APIM_SUB_KEY }}
 
