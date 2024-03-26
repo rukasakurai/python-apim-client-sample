@@ -5,17 +5,17 @@ import os
 AZURE_APIM_ENDPOINT = os.getenv("AZURE_APIM_ENDPOINT") + 'chat'
 APIM_SUB_KEY = os.getenv("APIM_SUB_KEY")
 
+body = {
+    "messages": [
+        {"role": "system", "content": "You are a helpful assistant"}
+    ], 
+    "context": {}
+}
+
+
 class TestDocSearchAPI(unittest.TestCase):
 
     def test_docsearch_api_success(self):
-        # Define the input parameters for the test
-        body = {
-            "messages": [
-                {"role": "system", "content": "You are a helpful assistant"}
-            ], 
-            "context": {}
-        }
-
         # Call the function with the test parameters
         response = call_apim(AZURE_APIM_ENDPOINT, body, APIM_SUB_KEY)
 
@@ -23,14 +23,6 @@ class TestDocSearchAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         
     def test_docsearch_api_fail_invalid_endpoint(self):
-        # Define the input parameters for the test
-        body = {
-            "messages": [
-                {"role": "system", "content": "You are a helpful assistant"}
-            ], 
-            "context": {}
-        }
-
         # Use an incorrect endpoint
         incorrect_endpoint = "http://incorrect.endpoint"
 
@@ -39,14 +31,6 @@ class TestDocSearchAPI(unittest.TestCase):
             call_apim(incorrect_endpoint, body, APIM_SUB_KEY)        
     
     def test_docsearch_api_fail_invalid_key(self):
-        # Define the input parameters for the test
-        body = {
-            "messages": [
-                {"role": "system", "content": "You are a helpful assistant"}
-            ], 
-            "context": {}
-        }
-
         # Use an incorrect subscription key
         incorrect_key = "incorrect_key"
         
@@ -61,6 +45,6 @@ class TestDocSearchAPI(unittest.TestCase):
 
         response = call_apim(AZURE_APIM_ENDPOINT, incorrect_body, APIM_SUB_KEY)
         self.assertEqual(response.status_code, 500)
-        
+                
 if __name__ == '__main__':
     unittest.main()
