@@ -4,6 +4,7 @@ This is a repository containing sample Python code that calls an API published t
 ## Preparation
 1. Deploy an Azure API Management instance (e.g., leverage https://github.com/Azure-Samples/jp-azureopenai-samples/tree/main/6.azureopenai-landing-zone-accelerator)
 1. Deploy https://github.com/Azure-Samples/azure-search-openai-demo
+1. Add an API in Azure API Management that calls the AI Search index endpoint of azure-search-openai-demo
 1. Add an API in Azure API Management that calls the `/chat` endpoint of azure-search-openai-demo
 1. Get your APIM endpoint and subscription key and set them as environment variables as follows
 
