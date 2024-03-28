@@ -19,3 +19,5 @@ export APIM_SUB_KEY=<Your APIM Subscription Key>
 ## Forking this repository
 You will need to set up GitHub Action secrets for the Actions to function properly
 https://github.com/rukasakurai/python-apim-client-sample/actions
+
+Testing check URL mechanism: https://incorrect.url
