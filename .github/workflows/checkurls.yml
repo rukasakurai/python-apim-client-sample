@@ -12,6 +12,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Check URLs
+    - name: Install lychee
       run: |
-        docker run --rm -v $PWD:/input:ro lycheeverse/lychee /input/**/*.md --config /input/.github/lychee.yml
+        cargo install lychee
+
+    - name: Check URLs in Markdown files
+      run: lychee ./**/*.md
