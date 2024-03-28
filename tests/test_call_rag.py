@@ -12,7 +12,7 @@ body = {
     "context": {}
 }
 
-class TestDocSearchAPI(unittest.TestCase):
+class TestCallRag(unittest.TestCase):
 
     def test_docsearch_api_success(self):
         # Call the function with the test parameters

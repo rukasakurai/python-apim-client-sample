@@ -13,7 +13,7 @@ body = {
     "context": {}
 }
 
-class TestDocSearchAPIAysnc(IsolatedAsyncioTestCase):
+class TestCallRagAysnc(IsolatedAsyncioTestCase):
 
     async def test_docsearch_api_async_success(self):
         # Call the function with the test parameters

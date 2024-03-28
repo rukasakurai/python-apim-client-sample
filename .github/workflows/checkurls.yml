@@ -1,0 +1,20 @@
+name: Check URLs
+
+on:
+  schedule:
+    - cron: '30 8 * * *'
+  workflow_dispatch:
+  
+jobs:
+  check-urls:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Check URLs
+      run: |
+        curl -s https://raw.githubusercontent.com/lycheeverse/lychee/master/lychee-action.yml > .github/lychee.yml
+        echo "- method: GET" >> .github/lychee.yml
+        echo "  verify: true" >> .github/lychee.yml
+        docker run --rm -v $PWD:/input:ro lycheeverse/lychee /input/**/*.md --config /input/.github/lychee.yml

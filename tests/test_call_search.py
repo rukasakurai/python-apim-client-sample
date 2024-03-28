@@ -1,12 +1,12 @@
 import unittest
 import os
 from unittest import IsolatedAsyncioTestCase
-from utils.call_apim import get_apim_with_httpx
+from utils.call_apim import get_apim_with_httpx, call_with_urllib
 
 AZURE_APIM_ENDPOINT = os.getenv("AZURE_APIM_ENDPOINT") + 'search/docs/$count'
 APIM_SUB_KEY = os.getenv("APIM_SUB_KEY")
 
-class TestDocSearchAPIAysnc(IsolatedAsyncioTestCase):
+class TestCallSearch(IsolatedAsyncioTestCase):
 
     async def test_search_api_async_success(self):
         # Call the function with the test parameters
@@ -30,6 +30,10 @@ class TestDocSearchAPIAysnc(IsolatedAsyncioTestCase):
         
         response = await get_apim_with_httpx(AZURE_APIM_ENDPOINT, incorrect_key)
         self.assertEqual(response.status_code, 401)
-        
+
+    def test_urllib(self):
+        response = call_with_urllib(APIM_SUB_KEY)
+        self.assertEqual(response.getcode(), 200)
+
 if __name__ == '__main__':
     unittest.main()

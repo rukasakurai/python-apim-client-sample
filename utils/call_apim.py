@@ -1,6 +1,7 @@
 import requests
 import json
 import httpx
+import urllib.request
 
 # httpx (https://pypi.org/project/httpx/) を使った実装例
 async def post_apim_with_httpx(url, body, ocp_apim_subscription_key):
@@ -41,3 +42,22 @@ def post_apim_with_requests(url, body, ocp_apim_subscription_key):
     
     return response
 
+def call_with_urllib(ocp_apim_subscription_key):
+    try:
+        url = "https://apim-rag-client-temp.azure-api.net/search/docs/$count"
+
+        hdr ={
+        # Request headers
+        'Ocp-Apim-Subscription-Key': ocp_apim_subscription_key,
+        }
+
+        req = urllib.request.Request(url, headers=hdr)
+
+        req.get_method = lambda: 'GET'
+        response = urllib.request.urlopen(req)
+        # print(response.getcode())
+        # print(response.read())
+    except Exception as e:
+        print(e)
+    
+    return response
