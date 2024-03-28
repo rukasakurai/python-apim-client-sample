@@ -14,7 +14,4 @@ jobs:
 
     - name: Check URLs
       run: |
-        curl -s https://raw.githubusercontent.com/lycheeverse/lychee/master/lychee-action.yml > .github/lychee.yml
-        echo "- method: GET" >> .github/lychee.yml
-        echo "  verify: true" >> .github/lychee.yml
         docker run --rm -v $PWD:/input:ro lycheeverse/lychee /input/**/*.md --config /input/.github/lychee.yml

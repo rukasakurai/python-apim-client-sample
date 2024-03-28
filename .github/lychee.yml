@@ -1,0 +1,6 @@
+# .github/lychee.yml
+scheme:
+  - "http"
+  - "https"
+method: GET
+verify: true
